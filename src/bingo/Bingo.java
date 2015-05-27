@@ -109,6 +109,7 @@ public class Bingo extends JFrame {
         for (Carton nCarton : cartones) {
             nCarton.buscarNumero(numeroMagico);
             
+            
         }
     }
 
