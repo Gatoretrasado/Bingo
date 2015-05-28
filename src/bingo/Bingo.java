@@ -5,6 +5,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -17,6 +18,8 @@ public class Bingo extends JFrame {
     static ArrayList<Carton> cartones = new ArrayList<>();
     static ArrayList<Integer> numerosNombrados = new ArrayList<>();
     int numeroMagico = 0;
+    static int ncartones=1;
+    static JButton btn_iniciar = new JButton();
 
     public Bingo() {
         //TITULO DE LA VENTANA
@@ -33,6 +36,7 @@ public class Bingo extends JFrame {
         visible();
         //HACEMOS VISIBLE LA VENTANA
         setVisible(true);
+         
     }
 
     void visible() {
@@ -43,14 +47,16 @@ public class Bingo extends JFrame {
         crearBotones();
         panel_principal.add("Center", panel_botones);
         getContentPane().add(panel_principal);
+        ImageIcon icono = new ImageIcon("iconos/bingo.png"); 
+        setIconImage(icono.getImage());
     }
 
     public static void main(String[] args) {
         Bingo b = new Bingo();
     }
-
+    boolean creado=false;
     void crearBotones() {
-        JButton btn_iniciar = new JButton();
+        
         btn_iniciar.setText("Iniciar");
         btn_iniciar.addActionListener(new ActionListener() {
             @Override
@@ -59,7 +65,12 @@ public class Bingo extends JFrame {
                     if (cartones.isEmpty()) {
                         JOptionPane.showMessageDialog(null, "Primero debes tener algun carton", "ALTO!", JOptionPane.WARNING_MESSAGE);
                     } else {
-                        btn_iniciar.setText("Jugar");
+                        if(Carton.cantadoLinea==false)
+                            btn_iniciar.setText("Jugar para linea");
+                        if(!creado){
+                            VentanaNumeros ventanaN = new VentanaNumeros();
+                            creado=true;
+                        }
                         jugar();
                     }
                 } catch (Exception err) {
@@ -75,8 +86,9 @@ public class Bingo extends JFrame {
             @Override
             public void actionPerformed(ActionEvent evt) {
                 try {
-                    if (cartones.isEmpty()) {
+                    if (numerosNombrados.isEmpty()) {
                         cartones.add(new Carton());
+                        ncartones++;
                     } else {               
                     JOptionPane.showMessageDialog(null, "La partida esta en marcha, deberas esperar", "ALTO!", JOptionPane.WARNING_MESSAGE);
                     }
@@ -110,6 +122,7 @@ public class Bingo extends JFrame {
             if (numerosNombrados.contains(numeroMagico) == false && numeroMagico != 0) {
                 numerosNombrados.add(numeroMagico);
                 System.out.println("numero: " + numeroMagico);
+                VentanaNumeros.numero.setText(""+numeroMagico);
                 esta = true;
             }
         } while (!esta);

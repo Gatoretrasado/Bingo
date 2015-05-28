@@ -25,11 +25,11 @@ public class Carton extends JFrame {
     //cuenta huecos y numeros totales
     int htotales, contNumeros = 0, contadorPosicion = 0;
     ArrayList<Integer> numeros = new ArrayList<Integer>();
-    int i = 0;
+    int i = 0,numeroCarton = Bingo.ncartones ;
 
     public Carton() {
         //TITULO DE LA VENTANA
-        setTitle("Carton");
+        setTitle("Carton "+numeroCarton);
         //TAMAÑO DE LA VENTANA
         setSize(550, 240);
         //SI NOS DEJA CAMBIAR SUS DIMENSIONES O NO 
@@ -37,7 +37,7 @@ public class Carton extends JFrame {
         //POSICION EN LA QUE APARECE
         setLocationRelativeTo(null);
         //SALIR AL DARLE A LA X
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         //METODO PARA CREAR INTERFAZ Y AGREGAR EVENTOS A BOTONES
         visible();
         //HACEMOS VISIBLE LA VENTANA
@@ -232,9 +232,9 @@ public class Carton extends JFrame {
                     boton[nboton].setBackground(Color.red);
                     if (cantadoLinea == false) {
                         compLinea();
-                        
+
                     }
-                    if(cantadoBingo==false){
+                    if (cantadoBingo == false) {
                         compBingo();
                     }
                 }
@@ -252,16 +252,16 @@ public class Carton extends JFrame {
             for (int columna = 0; columna < 9; columna++) {
                 if (boton[nboton].getBackground().equals(red) || boton[nboton].getBackground().equals(BLACK)) {
                     correcto++;
-
                 }
                 nboton++;
             }
             if (correcto == 9) {
                 linea = true;
                 cantadoLinea = true;
-                JOptionPane.showMessageDialog(null, "Linea Realizada", "LINEA", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Linea Realizada en Carton "+numeroCarton, "LINEA", JOptionPane.INFORMATION_MESSAGE);
+                Bingo.btn_iniciar.setText("Jugar para bingo");
                 System.out.println("linea");
-            }
+            }  
         }
     }
 
@@ -279,9 +279,24 @@ public class Carton extends JFrame {
             if (correcto == 27) {
                 bingo = true;
                 cantadoBingo = true;
-                JOptionPane.showMessageDialog(null, "Bingo Realizado", "BINGO!!!", JOptionPane.INFORMATION_MESSAGE);
                 System.out.println("bingo");
-                //Bingo.cartones.
+                JOptionPane.showMessageDialog(null, "Bingo Realizado en Carton "+numeroCarton, "BINGO!!!", JOptionPane.INFORMATION_MESSAGE);
+                int confirmado = JOptionPane.showConfirmDialog(
+                        null,
+                        "¿Quieres jugar otra partida?");
+
+                if (JOptionPane.OK_OPTION == confirmado) {
+                    Bingo.ncartones=1;
+                    Bingo.numerosNombrados.clear();
+                     cantadoLinea=false;linea=false;cantadoBingo=false;bingo=false;
+                    for (Carton carton : Bingo.cartones) {
+                        carton.dispose();
+                    }
+                    Bingo.cartones.clear();
+                    Bingo.btn_iniciar.setText("Iniciar");
+                } else {
+                    System.exit(0);
+                }
             }
         }
     }
