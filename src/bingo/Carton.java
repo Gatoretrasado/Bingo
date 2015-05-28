@@ -33,7 +33,7 @@ public class Carton extends JFrame {
         //TAMAÑO DE LA VENTANA
         setSize(550, 240);
         //SI NOS DEJA CAMBIAR SUS DIMENSIONES O NO 
-        setResizable(true);
+        setResizable(false);
         //POSICION EN LA QUE APARECE
         setLocationRelativeTo(null);
         //SALIR AL DARLE A LA X

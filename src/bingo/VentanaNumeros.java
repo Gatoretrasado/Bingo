@@ -25,12 +25,12 @@ public class VentanaNumeros extends JFrame {
         //TITULO DE LA VENTANA
         setTitle("");
         //TAMAÑO DE LA VENTANA
-        setSize(80, 100);
-        
+        //setSize(80, 100);
+        setBounds(450, 0, 80, 100);
         //SI NOS DEJA CAMBIAR SUS DIMENSIONES O NO 
         setResizable(false);
         //POSICION EN LA QUE APARECE
-        setLocationRelativeTo(null);
+        //setLocationRelativeTo(null);
         //SALIR AL DARLE A LA X
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         //METODO PARA CREAR INTERFAZ Y AGREGAR EVENTOS A BOTONES
