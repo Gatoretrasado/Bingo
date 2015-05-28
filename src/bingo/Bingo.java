@@ -14,8 +14,8 @@ public class Bingo extends JFrame {
 
     JPanel panel_principal;
     JPanel panel_botones;
-    ArrayList<Carton> cartones = new ArrayList<>();
-    ArrayList<Integer> numerosNombrados = new ArrayList<>();
+    static ArrayList<Carton> cartones = new ArrayList<>();
+    static ArrayList<Integer> numerosNombrados = new ArrayList<>();
     int numeroMagico = 0;
 
     public Bingo() {
@@ -56,8 +56,12 @@ public class Bingo extends JFrame {
             @Override
             public void actionPerformed(ActionEvent evt) {
                 try {
-                    btn_iniciar.setText("Jugar");
-                    jugar();
+                    if (cartones.isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "Primero debes tener algun carton", "ALTO!", JOptionPane.WARNING_MESSAGE);
+                    } else {
+                        btn_iniciar.setText("Jugar");
+                        jugar();
+                    }
                 } catch (Exception err) {
                     System.out.println("Error: " + err);
                 }
@@ -71,7 +75,11 @@ public class Bingo extends JFrame {
             @Override
             public void actionPerformed(ActionEvent evt) {
                 try {
-                    cartones.add(new Carton());
+                    if (cartones.isEmpty()) {
+                        cartones.add(new Carton());
+                    } else {               
+                    JOptionPane.showMessageDialog(null, "La partida esta en marcha, deberas esperar", "ALTO!", JOptionPane.WARNING_MESSAGE);
+                    }
                 } catch (Exception err) {
                     System.out.println("Error: " + err);
                 }
@@ -86,7 +94,7 @@ public class Bingo extends JFrame {
             @Override
             public void actionPerformed(ActionEvent evt) {
                 try {
-
+                    System.exit(0);
                 } catch (Exception err) {
                     System.out.println("Error: " + err);
                 }
@@ -108,8 +116,7 @@ public class Bingo extends JFrame {
 
         for (Carton nCarton : cartones) {
             nCarton.buscarNumero(numeroMagico);
-            
-            
+
         }
     }
 

@@ -69,26 +69,9 @@ public class Carton extends JFrame {
                     boton[i].setText("");
                 }
                 panel_botones.add(boton[i]);
-                boton[i].addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent evt) {
-                        try {
-
-                            cambioColor(boton[i - 1]);
-                            System.out.println("hola");
-                        } catch (Exception err) {
-                            System.out.println("Error: " + err);
-                            System.out.println("aqui");
-                        }
-                    }
-                });
                 i++;
             }
         }
-    }
-
-    void cambioColor(JButton btn) {
-        btn.setBackground(Color.blue);
     }
 
     void superMetodoCrearCartones() {
@@ -239,8 +222,6 @@ public class Carton extends JFrame {
 
     }
 
-    static public boolean cantadoLinea = false, linea = false;
-
     public void buscarNumero(int numeroMagico) {
         int nboton = 0;
 
@@ -251,12 +232,18 @@ public class Carton extends JFrame {
                     boton[nboton].setBackground(Color.red);
                     if (cantadoLinea == false) {
                         compLinea();
+                        
+                    }
+                    if(cantadoBingo==false){
+                        compBingo();
                     }
                 }
                 nboton++;
             }
         }
     }
+
+    static public boolean cantadoLinea = false, linea = false;
 
     public void compLinea() {
         int nboton = 0, correcto;
@@ -265,7 +252,7 @@ public class Carton extends JFrame {
             for (int columna = 0; columna < 9; columna++) {
                 if (boton[nboton].getBackground().equals(red) || boton[nboton].getBackground().equals(BLACK)) {
                     correcto++;
-                    
+
                 }
                 nboton++;
             }
@@ -274,6 +261,27 @@ public class Carton extends JFrame {
                 cantadoLinea = true;
                 JOptionPane.showMessageDialog(null, "Linea Realizada", "LINEA", JOptionPane.INFORMATION_MESSAGE);
                 System.out.println("linea");
+            }
+        }
+    }
+
+    static public boolean cantadoBingo = false, bingo = false;
+
+    public void compBingo() {
+        int nboton = 0, correcto = 0;
+        for (int fila = 0; fila < 3; fila++) {
+            for (int columna = 0; columna < 9; columna++) {
+                if (boton[nboton].getBackground().equals(red) || boton[nboton].getBackground().equals(BLACK)) {
+                    correcto++;
+                }
+                nboton++;
+            }
+            if (correcto == 27) {
+                bingo = true;
+                cantadoBingo = true;
+                JOptionPane.showMessageDialog(null, "Bingo Realizado", "BINGO!!!", JOptionPane.INFORMATION_MESSAGE);
+                System.out.println("bingo");
+                //Bingo.cartones.
             }
         }
     }
